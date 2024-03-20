@@ -1,8 +1,9 @@
 import pandas as pd
 from sklearn import tree
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import graphviz
 
 data_df = pd.read_csv('../data/train.csv')
@@ -26,8 +27,7 @@ features = ['duration', 'campaign', 'pdays', 'previous',
             'divorced', 'married', 'single', 'unknown_mar',
             'cellular', 'telephone',
             'apr', 'aug', 'dec', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep',
-            'fri', 'mon', 'thu', 'tue', 'wed'
-            ]
+            'fri', 'mon', 'thu', 'tue', 'wed']
 target = ['subscribe']
 X = data_dum_df[features]
 Y = data_dum_df[target]
@@ -37,10 +37,19 @@ decision_tree = DecisionTreeClassifier(criterion='entropy', max_depth=10, min_sa
 decision_tree.fit(X_train, Y_train)
 treeObj = decision_tree.tree_
 print('Node Count: ', treeObj.node_count, 'Depth: ', treeObj.max_depth)
-y_pred = decision_tree.predict(X_test)
-print("Accuracy:", accuracy_score(Y_test, y_pred))
+
+
+Y_pred = decision_tree.predict(X_test)
+print("Accuracy:", accuracy_score(Y_test, Y_pred))
 target_names = data_dum_df['subscribe'].unique().tolist()
 dot_data = tree.export_graphviz(decision_tree, feature_names=features, class_names=target_names, filled=True,
                                 rounded=True, special_characters=True)
 graph = graphviz.Source(dot_data)
 graph.render("full_tree")
+
+print(confusion_matrix(Y_test, Y_pred))
+print(classification_report(Y_test, Y_pred))
+
+score_cv = cross_val_score(decision_tree, X, Y, cv=5)
+print(score_cv)
+print(score_cv.mean())
