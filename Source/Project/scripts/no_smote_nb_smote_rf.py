@@ -1,20 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-from matplotlib.gridspec import GridSpec
-from collections import defaultdict
-from imblearn.pipeline import Pipeline
 from imblearn.over_sampling import SMOTE
-
-from scipy.special import expit as sigmoid
-from sklearn.compose import ColumnTransformer
-from sklearn.tree import DecisionTreeClassifier
-import graphviz
-from sklearn import tree
-
-from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn import preprocessing
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     brier_score_loss,
     f1_score,
@@ -22,20 +13,12 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     roc_auc_score,
-    mean_squared_error,
-    r2_score,
-    mean_absolute_error,
     accuracy_score,
-    classification_report,
     confusion_matrix,
 )
-from sklearn import preprocessing
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler, OneHotEncoder, StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split, cross_val_predict
 from sklearn.naive_bayes import GaussianNB
-from sklearn.calibration import CalibratedClassifierCV, CalibrationDisplay, calibration_curve
-from math import sqrt
+from sklearn.preprocessing import LabelEncoder
 
 # in order to check
 pd.set_option("display.max_rows", None)

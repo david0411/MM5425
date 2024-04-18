@@ -1,10 +1,9 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.over_sampling import SMOTE
-from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     brier_score_loss,
     f1_score,
@@ -15,6 +14,7 @@ from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
 )
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
 # in order to check
